@@ -159,6 +159,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 setState(() {});
               },
             ),
+            StreamBuilder<Map<String, dynamic>?>(
+  stream: FlutterBackgroundService().on('update'),
+  builder: (context, snapshot) {
+    if (!snapshot.hasData) {
+      return Text("60 s", style: TextStyle(fontSize: 40));
+    }
+
+    final data = snapshot.data!;
+    String? count = data["count"].toString() + " s";
+    return Text(count, style: TextStyle(fontSize: 40));
+  },
+)
+
+            
             SizedBox(height: 20),
             ElevatedButton(
               child: Text(isChangingColor ? 'Stop Changing Color' : 'Change Color'),
